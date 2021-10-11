@@ -1,5 +1,6 @@
 const socket = io('/');
 const videoGrid = document.getElementById('video-grid');
+const smallWindow = document.getElementById('small-window');
 const myPeer = new Peer(undefined, {
 	host: '/',
 	port: '3030'
@@ -16,7 +17,7 @@ navigator.mediaDevices.getUserMedia({
 	video: true,
 	audio: true
 }).then(stream => {
-	addVideoStream(myVideo, stream)
+	addToSmallWindow(myVideo, stream)
 
 	myPeer.on('call', call => {
 		console.log(call)
@@ -62,4 +63,12 @@ function addVideoStream(video, stream) {
 		video.play()
 	})
 	videoGrid.append(video)
+}
+
+function addToSmallWindow(video, stream) {
+	video.srcObject = stream
+	video.addEventListener('loadedmetadata', () => {
+		video.play()
+	})
+	smallWindow.append(video)
 }
