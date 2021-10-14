@@ -4,27 +4,76 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Telepresence Web App</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
     <style>
+
+			body {
+				padding: 0px;
+				margin: 0px;
+				background-color: bisque;
+			}
+
+			#small-window {
+				position: absolute;
+				top: 135px;
+				right: 150px;
+			}
+
       #video-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, 300px);
-        grid-auto-rows: 300px;
+        width: 80vw;
+        height: 70vh;
+				line-height: 70vh;
+        object-fit: cover;
+				background-color: gray;
       }
 
-      video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
+			#small-window video {
+				width: 20vw;
+				height: 25vh;
+				object-fit: cover;
+			}
+
+			#main {
+				margin: auto;
+				text-align: center;
+				margin: 48px;
+				margin-top: 48px;
+				margin-bottom: 48px;
+			}
+
+			#control-section {
+				text-align: left;
+				margin: 60px;
+			}
+
+
     </style>
 		<script>
       const ROOM_ID = "<%= roomId %>";
+
+			function action(e) {
+				alert('button clicked');
+			}
     </script>
 		<script defer src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
     <script defer src="https://joshuaodeyemi.com/project/socket.io/socket.io.js"></script>
     <script defer src="script.js"></script>
   </head>
   <body>
-    <div id="video-grid"></div>
+		<nav class="navbar navbar-light bg-light">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#">Telepresence</a>
+			</div>
+		</nav>
+		<div id=main>
+			<div id="video-grid">
+				Waiting for bot...
+			</div>
+			<div id="small-window"></div>
+			<div id="control-section">
+				<h3>Controls</h3>
+				<button onclick="action()">Action</button>
+			</div>
+		</div>
   </body>
 </html>
