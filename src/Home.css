@@ -1,0 +1,16 @@
+.image-container {
+    
+    text-align: center;
+    Justify-Content: centre;  
+    align-items: center;    
+}
+
+.catchphrase {
+    text-align: center;
+    font-size: 45px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.h2 {
+    text-align: center;
+}
