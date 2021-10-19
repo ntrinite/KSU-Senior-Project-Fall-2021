@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+
 import rospy
 from std_msgs.msg import String
 import time
