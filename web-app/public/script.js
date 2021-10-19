@@ -10,6 +10,7 @@ myVideo.muted = true;
 const peers = {};
 
 myPeer.on('open', id => {
+  console.log('peer open');
 	socket.emit('join-room', ROOM_ID, id)
 });
 
@@ -62,6 +63,10 @@ function addVideoStream(video, stream) {
 	video.addEventListener('loadedmetadata', () => {
 		video.play()
 	})
+	let p = document.getElementById("waiting");
+	p.parentNode.removeChild(p);
+	videoGrid.value = "";
+	videoGrid.style.backgroundColor = "#FFE4C4";
 	videoGrid.append(video)
 }
 
@@ -70,5 +75,6 @@ function addToSmallWindow(video, stream) {
 	video.addEventListener('loadedmetadata', () => {
 		video.play()
 	})
+
 	smallWindow.append(video)
 }
