@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
     <title>Telepresence Web App</title>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
     <style>
@@ -55,7 +56,7 @@
 				alert('button clicked');
 			}
     </script>
-		<script defer src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+	  <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
     <script defer src="https://joshuaodeyemi.com/project/socket.io/socket.io.js"></script>
     <script defer src="script.js"></script>
   </head>
@@ -67,7 +68,7 @@
 		</nav>
 		<div id=main>
 			<div id="video-grid">
-				Waiting for bot...
+				<p id ="waiting">Waiting for bot... </p>
 			</div>
 			<div id="small-window"></div>
 			<div id="control-section">
