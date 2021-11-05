@@ -1,15 +1,15 @@
 const socket = io('/');
 const videoGrid = document.getElementById('video-grid');
 const smallWindow = document.getElementById('small-window');
-const myPeer = new Peer(undefined, {
-	host: '/',
-	port: '3030'
-});
+const myPeer = new Peer();
+
 const myVideo = document.createElement('video');
 myVideo.muted = true;
 const peers = {};
 
 myPeer.on('open', id => {
+	console.log('my id: ' + id);
+	console.log('room id: ' + ROOM_ID);
 	socket.emit('join-room', ROOM_ID, id)
 });
 
@@ -62,6 +62,10 @@ function addVideoStream(video, stream) {
 	video.addEventListener('loadedmetadata', () => {
 		video.play()
 	})
+	let p = document.getElementById("waiting");
+	p.parentNode.removeChild(p);
+	videoGrid.value = "";
+	videoGrid.style.backgroundColor = "#FFE4C4";
 	videoGrid.append(video)
 }
 
