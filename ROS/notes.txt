@@ -1,0 +1,2 @@
+- Vue is in development mode here, not production mode
+- the server address is blank for now
