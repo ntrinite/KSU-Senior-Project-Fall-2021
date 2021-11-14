@@ -1,0 +1,8 @@
+prefix=/home/hammerhead/NO-TOUCH/KSU-Senior-Project-Fall-2021/ROS/install
+
+Name: movement
+Description: Description of movement
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
