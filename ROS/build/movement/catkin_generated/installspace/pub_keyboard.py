@@ -2,36 +2,44 @@
 
 import rospy
 from std_msgs.msg import Int16
+from movement.msg import Control
 import time
 from pynput import keyboard
 
 def on_press(key):
-    pub = rospy.Publisher('cmd_vel', Int16, queue_size=10)
+    pub = rospy.Publisher('cmd_vel', Control, queue_size=10)
+    msg = Control()
+    msg.do_move = True
     print("key pressed was {} ".format(key))
     rate = rospy.Rate(10) #hz
     try:
         if(key.char == 'w'):
-            pub.publish(8)
+            msg.direction = 8
             print("Forward")
         elif(key.char == 's'):
-            pub.publish(2)
+            msg.direction = 2
             print("Down")
         elif(key.char == 'd'):
-            pub.publish(6)
+            msg.direction = 6
             print("Right")
         elif(key.char == 'a'):
-            pub.publish(4)
+            msg.direction = 4
             print("Left")
         else:
             print("idk dude")
+            msg.direction = 0
         # rospy.sleep()
+        pub.publish(msg)
     except AttributeError:
         pass
 
 def on_release(key):
     print("{} was released.".format(str(key)))
-    pub = rospy.Publisher('cmd_vel', Int16, queue_size=10)
-    pub.publish(17)
+    pub = rospy.Publisher('cmd_vel', Control, queue_size=10)
+    msg = Control()
+    msg.do_move = False
+    msg.direction = 17
+    pub.publish(msg)
     if key == keyboard.Key.esc:
         return False
 

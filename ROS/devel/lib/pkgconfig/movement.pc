@@ -3,6 +3,6 @@ prefix=/home/hammerhead/NO-TOUCH/KSU-Senior-Project-Fall-2021/ROS/devel
 Name: movement
 Description: Description of movement
 Version: 0.0.0
-Cflags: 
+Cflags: -I/home/hammerhead/NO-TOUCH/KSU-Senior-Project-Fall-2021/ROS/devel/include
 Libs: -L${prefix}/lib 
 Requires: 
