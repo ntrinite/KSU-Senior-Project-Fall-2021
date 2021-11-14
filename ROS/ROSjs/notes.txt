@@ -1,0 +1,3 @@
+- Vue is in development mode here, not production mode
+- the server address is blank for now
+- change connected to true in the JS file to see it when it does connect
