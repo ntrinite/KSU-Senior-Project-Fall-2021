@@ -2,6 +2,7 @@
 #include <ArduinoHardware.h>
 
 #include <std_msgs/Int16.h>
+#include <movement/Control.h>
 
 //Motor A
 int PWMA = 2;   //Speed control pin 
@@ -15,8 +16,8 @@ int BIN2 = 22;  //Direction - HIGH or LOW
 
 ros::NodeHandle nh;
 
-void callback(const std_msgs::Int16& cmd) {
-  if(cmd.data == 8)
+void callback(const movement::Control& cmd) {
+  if(cmd.direction == 8 && cmd.do_move)
   { 
     nh.loginfo("going FOOOORRWWARDD");
 //    nh.loginfo(cmd.data);    
@@ -25,36 +26,36 @@ void callback(const std_msgs::Int16& cmd) {
     move(1, 100, 1);
     move(2, 100, 0);
   }
-  else if(cmd.data == 2)
+  else if(cmd.direction == 2 && cmd.do_move)
   { 
     nh.loginfo("going BAACCCKKK");
-    nh.loginfo(cmd.data);
+//    nh.loginfo(cmd.direction);/
     
     //back
     move(1, 100, 0);
     move(2, 100, 1);
   }
-  else if(cmd.data == 4)
+  else if(cmd.direction == 4 && cmd.do_move)
   { 
     nh.loginfo("going LEEEEFFFTTT");
-//    nh.loginfo(cmd.data);
+//    nh.loginfo(cmd.direction);
     
     //left 
     move(1, 100, 1);
     move(2, 100, 1);
 
   }
-   else if(cmd.data == 6)
+   else if(cmd.direction == 6 && cmd.do_move)
   { 
     nh.loginfo("going RIIIIIIGHT");
-//    nh.loginfo(cmd.data);
+//    nh.loginfo(cmd.direction);
     
     //Right
     move(1, 100, 0);
     move(2, 100, 0);
   }
   else {
-    nh.loginfo("Why this don't work");
+    nh.loginfo("STOPPING");
 //    nh.loginfo(cmd.data);
     move(1, 1, 0);
     move(2, 1, 1);
@@ -84,13 +85,14 @@ void move(int motor, int speed, int direction)
  
 }
 
-ros::Subscriber<std_msgs::Int16> sub("cmd_vel", &callback);
+//ros::Subscriber<std_msgs::Int16> dir_sub("cmd_v/el", &callback);
+ros::Subscriber<movement::Control> controller_sub("move", &callback);
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   nh.initNode();
-  nh.subscribe(sub);
+  nh.subscribe(controller_sub);
   
   pinMode(PWMA, OUTPUT);        //Motor A
   pinMode(AIN1, OUTPUT);

@@ -2,4 +2,4 @@
 source_root_dir = '/home/hammerhead/NO-TOUCH/KSU-Senior-Project-Fall-2021/ROS/src'
 whitelisted_packages = ''.split(';') if '' != '' else []
 blacklisted_packages = ''.split(';') if '' != '' else []
-underlay_workspaces = '/home/hammerhead/NO-TOUCH/KSU-Senior-Project-Fall-2021/ROS/devel;/opt/ros/melodic'.split(';') if '/home/hammerhead/NO-TOUCH/KSU-Senior-Project-Fall-2021/ROS/devel;/opt/ros/melodic' != '' else []
+underlay_workspaces = '/home/hammerhead/NO-TOUCH/KSU-Senior-Project-Fall-2021/ROS/install;/opt/ros/melodic'.split(';') if '/home/hammerhead/NO-TOUCH/KSU-Senior-Project-Fall-2021/ROS/install;/opt/ros/melodic' != '' else []

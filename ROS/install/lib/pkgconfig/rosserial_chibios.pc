@@ -1,0 +1,8 @@
+prefix=/home/hammerhead/NO-TOUCH/KSU-Senior-Project-Fall-2021/ROS/install
+
+Name: rosserial_chibios
+Description: Description of rosserial_chibios
+Version: 0.9.2
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

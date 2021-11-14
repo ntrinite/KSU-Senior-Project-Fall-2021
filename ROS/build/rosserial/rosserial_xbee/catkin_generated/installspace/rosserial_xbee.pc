@@ -1,0 +1,8 @@
+prefix=/home/hammerhead/NO-TOUCH/KSU-Senior-Project-Fall-2021/ROS/install
+
+Name: rosserial_xbee
+Description: Description of rosserial_xbee
+Version: 0.8.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
