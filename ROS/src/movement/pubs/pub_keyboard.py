@@ -15,19 +15,24 @@ def on_press(key):
     try:
         if(key.char == 'w'):
             msg.direction = 8
+            msg.speed = 250
             print("Forward")
         elif(key.char == 's'):
             msg.direction = 2
+            msg.speed = 250
             print("Down")
         elif(key.char == 'd'):
             msg.direction = 6
+            msg.speed = 150
             print("Right")
         elif(key.char == 'a'):
             msg.direction = 4
+            msg.speed = 150
             print("Left")
         else:
             print("idk dude")
             msg.direction = 0
+            msg.speed = 0
         # rospy.sleep()
         pub.publish(msg)
     except AttributeError:
@@ -39,6 +44,7 @@ def on_release(key):
     msg = Control()
     msg.do_move = False
     msg.direction = 17
+    msg.speed = 0
     pub.publish(msg)
     if key == keyboard.Key.esc:
         return False
