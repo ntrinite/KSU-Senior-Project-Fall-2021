@@ -9,7 +9,7 @@ def callback(data):
 def listener():
     print("making sub")
     rospy.init_node('I_am_sub', anonymous=True)
-    rospy.Subscriber("cmd_vel", Control, callback)
+    rospy.Subscriber("move", Control, callback)
     rospy.spin()
 
 if __name__ == '__main__':
