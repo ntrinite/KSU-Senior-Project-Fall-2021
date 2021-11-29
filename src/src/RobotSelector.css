@@ -1,0 +1,35 @@
+.page-purpose {
+    text-align: center;
+    font-size: 45px;
+}
+
+.h1 {
+    text-align: center;
+}
+
+
+.robots {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.robots td, .robots th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.robots tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+
+.robots tr:hover {
+    background-color: #ddd;
+}
+
+.robots th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #3e69beea;
+    color: white;
+}
