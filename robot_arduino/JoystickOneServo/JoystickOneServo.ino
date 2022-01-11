@@ -23,10 +23,14 @@ void setup() {
 
 void loop() {
   Xval = analogRead(Xpin);
-  WVx = (180./1023.)*Xval;  //Proportion conversion
+//  Serial.print("xval: ");
+//  Serial.println(Xval);
+  double val = map(Xval, 0, 1023, 110, 80);
+//  WVx = (360./1023.)*Xval;  //Proportion conversion
+  Serial.println(val);
   
-  Xservo.write(WVx);
+  Xservo.write(val);
   
-  delay(dt);
+//  delay(dt);
 
 }

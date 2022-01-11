@@ -1,8 +1,21 @@
 #include <ros.h>
 #include <ArduinoHardware.h>
+//#include <Stepper.h>
 
 #include <std_msgs/Int16.h>
 #include <movement/Control.h>
+
+//const int stepsPerRevolution = 2048;  // change this to fit the number of steps per revolution
+//const int rolePerMinute = 15;         // Adjustable range of 28BYJ-48 stepper is 0~17 rpm
+
+// initialize the stepper library on pins 8 through 11:
+//Stepper myStepper(stepsPerRevolution, 8, 10, 9, 11);
+
+////Stepper Motor
+//int A = 8;
+//int B = 9;
+//int C = 10;
+//int D = 11;
 
 //Motor A
 int PWMA = 2;   //Speed control pin 
@@ -38,7 +51,27 @@ void callback(const movement::Control& cmd) {
   front_l_blocked = sonar_sensor(TRIG_FL, ECHO_FL);
   back_blocked = sonar_sensor(TRIG_B, ECHO_B);
 
-  if(cmd.direction == 8 && cmd.do_move && (!front_r_blocked && !front_l_blocked))
+  if(cmd.direction == 69)
+  {
+    nh.loginfo("Stepper up");
+//    myStepper.setSpeed(700);
+//    myStepper.step(stepsPerRevolution);
+    int i = 0;
+//    while(i < stepsPerRevolution) {
+//      onestep();
+//      i++;
+//    }
+  }
+
+  if(cmd.direction == 420)
+  {
+    nh.loginfo("Stepper down");
+//    myStepper.setSpeed(-700);
+//    myStepper.step(-stepsPerRevolution);
+  }
+
+
+  if(cmd.direction == 8 && cmd.do_move /*&& (!front_r_blocked && !front_l_blocked)*/)
   { 
     nh.loginfo("going FOOOORRWWARDD");
 //    nh.loginfo(cmd.direction);
@@ -52,10 +85,10 @@ void callback(const movement::Control& cmd) {
 //    } 
     
     //forward
-    move(1, cmd.speed, 1);
-    move(2, cmd.speed, 0);
+    move(1, cmd.speed, 1, 8);
+    move(2, cmd.speed, 0, 8); 
   }
-  else if(cmd.direction == 2 && cmd.do_move && !back_blocked)
+  else if(cmd.direction == 2 && cmd.do_move /*&& !back_blocked*/)
   { 
     nh.loginfo("going BAACCCKKK");
 //    nh.loginfo(cmd.direction);
@@ -69,10 +102,10 @@ void callback(const movement::Control& cmd) {
 //    }
 //    
     //back
-    move(1, -cmd.speed, 0);
-    move(2, -cmd.speed, 1);
+    move(1, cmd.speed, 1, 2);
+    move(2, cmd.speed, 0, 2); 
   }
-  else if(cmd.direction == 4 && cmd.do_move && !front_l_blocked)
+  else if(cmd.direction == 4 && cmd.do_move /*&& !front_l_blocked*/)
   { 
     nh.loginfo("going LEEEEFFFTTT");
 //    nh.loginfo(cmd.direction);
@@ -86,11 +119,11 @@ void callback(const movement::Control& cmd) {
 //    }
     
     //left 
-    move(1, -cmd.speed, 1);
-    move(2, cmd.speed, 1);
+    move(1, cmd.speed, 1, 4);
+    move(2, cmd.speed, 0, 4); 
 
   }
-   else if(cmd.direction == 6 && cmd.do_move && !front_r_blocked)
+   else if(cmd.direction == 6 && cmd.do_move /*&& !front_r_blocked*/)
   { 
     nh.loginfo("going RIIIIIIGHT");
 //    nh.loginfo(cmd.direction);
@@ -104,50 +137,113 @@ void callback(const movement::Control& cmd) {
 //    }
     
     //Right
-    move(1, cmd.speed, 0);
-    move(2, -cmd.speed, 0);
+    move(1, cmd.speed, 1, 6);
+    move(2, cmd.speed, 0, 6); 
   }
   else {
 //    nh.loginfo(cmd.data);
-    move(1, cmd.speed, 0);
-    move(2, cmd.speed, 1);
+    move(1, cmd.speed, 1, 0);
+    move(2, cmd.speed, 0, 0); 
 //    nh.loginfo(cmd.direction);
 //    nh.loginfo(cmd.speed);
-    if(front_r_blocked)
-    {
-      nh.loginfo("Movin'");
-    }
-    else{
-      nh.loginfo("Not Movin' :(");
-    }
 
     nh.loginfo("STOPPING");
   }
     
 }
 
-void move(int motor, int speed, int direction)
+void move(int motor, int speed, int direction, int movement_dir)
 {
       boolean inPin1 = LOW;
-      boolean inPin2 = LOW;
-//      boolean inPin2 = HIGH;
+//      boolean inPin2 = LOW;
+      boolean inPin2 = HIGH;
 
       if(direction == 1){
             inPin1 = HIGH;
-            inPin2 = HIGH;
-//            inPin2 = LOW;
+//            inPin2 = HIGH;
+            inPin2 = LOW;
       }
 
+
+
+/*
+ * BASING EVERYTHING OFF OF THESE TWO COMMANDS BECAUSE IT'S EASIER TO DEBUG
+ *  move(1, cmd.speed, 1);
+    move(2, cmd.speed, 0);
+ */
+
+//
+////BACK ISN'T WORKING
+//      if(motor == 1) {
+//            digitalWrite(AIN2, inPin1);         //Used to detremine motor direction
+//            digitalWrite(BIN1, inPin2);         //Used to detremine motor direction
+//            analogWrite(PWMA, speed);     
+//      } else if(motor ==2) { // motor ==2
+//            digitalWrite(AIN2, inPin1);         //Used to detremine motor direction
+//            digitalWrite(BIN1, inPin2);         //Used to detremine motor direction
+//            analogWrite(PWMB, speed);
+//      }
+
+
+//RIIIIIIIIIIIIIIIGHHHHHHHHHHHTTTTTTTTTTTT
+  if(movement_dir == 6)
+  {
+    nh.loginfo("Move dir is 6");
       if(motor == 1) {
-            digitalWrite(AIN1, inPin1);         //Used to detremine motor direction
-            digitalWrite(AIN2, inPin2);         //Used to detremine motor direction
+            digitalWrite(AIN2, inPin1);         //Used to detremine motor direction
+            digitalWrite(BIN1, inPin2);         //Used to detremine motor direction
             analogWrite(PWMA, speed);     
-      } else {
-            digitalWrite(BIN1, inPin1);         //Used to detremine motor direction
+      } else if(motor ==2) { // motor ==2
+            digitalWrite(AIN1, inPin1);         //Used to detremine motor direction
             digitalWrite(BIN2, inPin2);         //Used to detremine motor direction
             analogWrite(PWMB, speed);
+      }
+  }
+
+
+      ///////////****************left *****************************///
+  if(movement_dir == 4)
+  {
+    nh.loginfo("move dir is 4");
+      if(motor == 1) {
+            digitalWrite(AIN1, inPin1);         //Used to detremine motor direction
+            digitalWrite(BIN2, inPin2);         //Used to detremine motor direction
+            analogWrite(PWMA, speed);     
+      } else if(motor ==2) { // motor ==2
+            digitalWrite(AIN2, inPin1);         //Used to detremine motor direction
+            digitalWrite(BIN1, inPin2);         //Used to detremine motor direction
+            analogWrite(PWMB, speed);
      }
- 
+  }
+
+     //************888motor forward****************************//
+
+  if(movement_dir == 8)
+  {
+    nh.loginfo("move dir is 8");
+           if(motor == 1) {
+            digitalWrite(AIN2, inPin1);         //Used to detremine motor direction
+            digitalWrite(BIN2, inPin2);         //Used to detremine motor direction
+            analogWrite(PWMA, speed);     
+      } else if(motor ==2) { // motor ==2
+            digitalWrite(AIN1, inPin1);         //Used to detremine motor direction
+            digitalWrite(BIN1, inPin2);         //Used to detremine motor direction
+            analogWrite(PWMB, speed);
+      }
+  }
+  else
+  {
+    nh.loginfo("nothing is working");
+    if(motor == 1) {
+            digitalWrite(AIN2, inPin1);         //Used to detremine motor direction
+            digitalWrite(BIN2, inPin2);         //Used to detremine motor direction
+            analogWrite(PWMA, 0);     
+      } else if(motor ==2) { // motor ==2
+            digitalWrite(AIN1, inPin1);         //Used to detremine motor direction
+            digitalWrite(BIN1, inPin2);         //Used to detremine motor direction
+            analogWrite(PWMB, 0);
+      }
+  }
 }
 
 bool sonar_sensor(int trig_pin, int echo_pin)
@@ -172,15 +268,48 @@ bool sonar_sensor(int trig_pin, int echo_pin)
     return false; // not blocked
   }
 }
-                 
+
+//void write(int a,int b,int c,int d){
+//digitalWrite(A,a);
+//digitalWrite(B,b);
+////digitalWrite(C,c);
+////digitalWrite(D,d);
+//}
+//
+//void onestep(){
+//write(1,0,0,0);
+//delay(5);
+//write(1,1,0,0);
+//delay(5);
+//write(0,1,0,0);
+//delay(5);
+//write(0,1,1,0);
+//delay(5);
+//write(0,0,1,0);
+//delay(5);
+//write(0,0,1,1);
+//delay(5);
+//write(0,0,0,1);
+//delay(5);
+//write(1,0,0,1);
+//delay(5);
+//}
+//                 
 //ros::Subscriber<std_msgs::Int16> dir_sub("cmd_v/el", &callback);
 ros::Subscriber<movement::Control> controller_sub("move", &callback);
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
+//  Serial.begin(9600);
   nh.initNode();
   nh.subscribe(controller_sub);
+
+//  myStepper.setSpeed(300);
+//
+//  pinMode(A, OUTPUT);        //Stepper
+//  pinMode(B, OUTPUT);
+//  pinMode(C, OUTPUT);
+//  pinMode(D, OUTPUT);
   
   pinMode(PWMA, OUTPUT);        //Motor A
   pinMode(AIN1, OUTPUT);
